@@ -1,0 +1,10 @@
+D:\QC-Interpreter\QC-Interpreter\bin\Debug\QC-Interpreter.exe.config
+D:\QC-Interpreter\QC-Interpreter\bin\Debug\QC-Interpreter.exe
+D:\QC-Interpreter\QC-Interpreter\bin\Debug\QC-Interpreter.pdb
+D:\QC-Interpreter\QC-Interpreter\obj\Debug\QC-Interpreter.csprojResolveAssemblyReference.cache
+D:\QC-Interpreter\QC-Interpreter\obj\Debug\QC_Interpreter.GetLog.resources
+D:\QC-Interpreter\QC-Interpreter\obj\Debug\QC_Interpreter.Properties.Resources.resources
+D:\QC-Interpreter\QC-Interpreter\obj\Debug\QC-Interpreter.csproj.GenerateResource.Cache
+D:\QC-Interpreter\QC-Interpreter\obj\Debug\QC-Interpreter.exe
+D:\QC-Interpreter\QC-Interpreter\obj\Debug\QC-Interpreter.pdb
+D:\QC-Interpreter\QC-Interpreter\obj\Debug\QC-Interpreter.csproj.ResolveComReference.cache
