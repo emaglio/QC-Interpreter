@@ -8,3 +8,4 @@ D:\QC-Interpreter\QC-Interpreter\obj\Debug\QC-Interpreter.csproj.GenerateResourc
 D:\QC-Interpreter\QC-Interpreter\obj\Debug\QC-Interpreter.exe
 D:\QC-Interpreter\QC-Interpreter\obj\Debug\QC-Interpreter.pdb
 D:\QC-Interpreter\QC-Interpreter\obj\Debug\QC-Interpreter.csproj.ResolveComReference.cache
+D:\QC-Interpreter\QC-Interpreter\bin\Debug\GenericParsing.dll

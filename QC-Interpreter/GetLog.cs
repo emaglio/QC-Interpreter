@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GenericParsing;
 
 namespace QC_Interpreter
 {
@@ -26,21 +27,32 @@ namespace QC_Interpreter
             if (result == DialogResult.OK)
             {
                 log_path = openQCLog.FileName;
+
                 try
                 {
-                    // https://www.codeproject.com/Articles/11698/A-Portable-and-Efficient-Generic-Parser-for-Flat-F
+                    using (GenericParserAdapter parser = new GenericParserAdapter(log_path))
+                    {
+                        parser.ColumnDelimiter = ',';
+                        parser.TextQualifier = null;
 
-                    //validate file
-                    var excelApp = new Microsoft.Office.Interop.Excel.Application();
-                    excelApp.Visible = false;
-                    excelApp.Workbooks.Open(log_path);
+                        var results = parser.GetDataSet();
+                        List<string> test_list = new List<string> { "Calibrate_Scale", "Calibrate_TV", "Autorun", "Volume", "Analyser_Hardware", "Scale_Check" };
+                        int num_rows = results.Tables[0].Rows.Count;
+                        var some = test_list.Find(x => x == "Calibrate_Scale");
+                        var some2 = test_list.Find(x => x == "Stocazzo");
+                        for (int i = 0; i < num_rows; i++)
+                            test_list.Find(x => x == results.Tables[0].Rows[0][i].ToString());
+                            if (results.Tables[0].Rows[0] != "Export QC Results")
+                            {
+                                throw new Exception("\nExpecting to find 'Export QC Results' in the first cell of the file but it has not been found.\n" +
+                                   "Make sure you are selecting a QC result file for Bod Pod or Pea Pod and try again!");
+                            }
+                    }
                 }
                 catch (Exception ex)
                 {
-                    if (ex is System.IO.IOException || ex is ArgumentException)
-                    {
-                        MessageBox.Show("You have selected the wrong file", "Wrong File!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    MessageBox.Show("Something went wrong while opening the file.\nHere the full error message: " + ex.Message, "Error in opening the file", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
