@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GenericParsing;
+using System.Collections;
 
 namespace QC_Interpreter
 {
@@ -36,17 +37,24 @@ namespace QC_Interpreter
                         parser.TextQualifier = null;
 
                         var results = parser.GetDataSet();
-                        List<string> test_list = new List<string> { "Calibrate_Scale", "Calibrate_TV", "Autorun", "Volume", "Analyser_Hardware", "Scale_Check" };
+                        List<string> tests = new List<string> { "Calibrate_Scale", "Calibrate_TV", "Autorun", "Volume", "Analyze_Hardware", "Scale_Check" };
+                        Hashtable test_list = new Hashtable();
+
                         int num_rows = results.Tables[0].Rows.Count;
-                        var some = test_list.Find(x => x == "Calibrate_Scale");
-                        var some2 = test_list.Find(x => x == "Stocazzo");
+
                         for (int i = 0; i < num_rows; i++)
-                            test_list.Find(x => x == results.Tables[0].Rows[0][i].ToString());
-                            if (results.Tables[0].Rows[0] != "Export QC Results")
-                            {
-                                throw new Exception("\nExpecting to find 'Export QC Results' in the first cell of the file but it has not been found.\n" +
-                                   "Make sure you are selecting a QC result file for Bod Pod or Pea Pod and try again!");
-                            }
+                            foreach(string test in tests)
+                                if (("Export_QC_Test_" + test) == results.Tables[0].Rows[i][0].ToString()){
+                                    test_list.Add(test, i);
+                                }
+
+                        if(tests.Count != test_list.Count)
+                            foreach (string test in tests)
+                                if (!test_list.ContainsKey(test))
+                                {
+                                    throw new Exception("\nExpecting to find '" + test + "' in the file but it has not been found.\n" +
+                                       "Make sure you are selecting a QC result file for Bod Pod or Pea Pod and try again!");
+                                }
                     }
                 }
                 catch (Exception ex)
