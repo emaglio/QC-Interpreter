@@ -16,6 +16,8 @@ namespace QC_Interpreter
     {
         //GetLog variable
         string log_path;
+        DataSet results;
+        Hashtable test_list = new Hashtable();
 
         public GetLog()
         {
@@ -36,16 +38,16 @@ namespace QC_Interpreter
                         parser.ColumnDelimiter = ',';
                         parser.TextQualifier = null;
 
-                        var results = parser.GetDataSet();
-                        List<string> tests = new List<string> { "Calibrate_Scale", "Calibrate_TV", "Autorun", "Volume", "Analyze_Hardware", "Scale_Check" };
-                        Hashtable test_list = new Hashtable();
+                        results = parser.GetDataSet();
+                        List<string> tests = new List<string> { "Calibrate_Scale", "Calibrate_TV", "Autorun", "Volume", "Analyze_Hardware", "Scale_Check", "Mass" };
+                        
 
                         int num_rows = results.Tables[0].Rows.Count;
 
                         for (int i = 0; i < num_rows; i++)
                             foreach(string test in tests)
                                 if (("Export_QC_Test_" + test) == results.Tables[0].Rows[i][0].ToString()){
-                                    test_list.Add(test, i);
+                                    test_list.Add(test, i+2);
                                 }
 
                         if(tests.Count != test_list.Count)
@@ -56,6 +58,9 @@ namespace QC_Interpreter
                                        "Make sure you are selecting a QC result file for Bod Pod or Pea Pod and try again!");
                                 }
                     }
+
+                    //elaborate data
+                    var dataEstrapolation = new Utility.DataEstrapolation(results, test_list);
                 }
                 catch (Exception ex)
                 {
